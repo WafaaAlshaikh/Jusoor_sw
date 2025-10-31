@@ -2,8 +2,7 @@
 
 [![Spring Boot](https://img.shields.io/badge/Spring%20Boot-3.x-brightgreen.svg)](https://spring.io/projects/spring-boot)
 [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
-[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://www.postgresql.org/)
-[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
 
 A comprehensive Spring Boot application for managing invoices with multi-format upload support, role-based access control, and complete audit trail functionality.
 
@@ -92,7 +91,7 @@ The application follows a **Layered Architecture** pattern with clear separation
                     ↓
 ┌─────────────────────────────────────────┐
 │            Database Layer               │
-│            (PostgreSQL)                 │
+│            (MySQL)                 │
 └─────────────────────────────────────────┘
 ```
 
