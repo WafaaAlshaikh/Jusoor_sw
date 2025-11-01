@@ -22,8 +22,6 @@ A comprehensive Spring Boot application for managing invoices with multi-format 
 - [Design Patterns](#design-patterns)
 - [Security](#security)
 - [Project Structure](#project-structure)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
