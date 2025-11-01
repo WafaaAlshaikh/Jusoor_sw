@@ -4,7 +4,7 @@
 [![Java](https://img.shields.io/badge/Java-17+-orange.svg)](https://www.oracle.com/java/)
 
 
-A comprehensive Spring Boot application for managing invoices with multi-format upload support, role-based access control, and complete audit trail functionality.
+A comprehensive Spring Boot application for managing invoices with multi-format upload support, role-based access control, and complete audit trail functionality. This project was developed as part of my training with **Harri**.
 
 ---
 
