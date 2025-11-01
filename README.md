@@ -38,7 +38,7 @@ Invoice Tracker is a full-stack web application designed to streamline invoice m
 - **Complete Audit Trail**: Track all changes with before/after states for compliance
 - **Advanced Search & Filtering**: Search by date, file type, status, and metadata
 - **Secure File Storage**: UUID-based file naming with validation and size limits
-- **RESTful API Architecture**: 34 well-documented endpoints following REST best practices
+- **RESTful API Architecture**: well-documented endpoints following REST best practices
 
 ---
 
@@ -113,7 +113,7 @@ The application follows a **Layered Architecture** pattern with clear separation
 - **Spring Security** - Authentication & authorization
 - **Spring Data JPA** - Data persistence
 - **Hibernate** - ORM framework
-- **PostgreSQL 14+** - Relational database
+- **MySQL** - Relational database
 - **JWT (jjwt)** - Token-based authentication
 - **Lombok** - Boilerplate reduction
 - **Maven** - Build tool
@@ -138,7 +138,7 @@ The application follows a **Layered Architecture** pattern with clear separation
 
 - Java 17 or higher
 - Maven 3.8+
-- PostgreSQL 14+
+- MySQL
 - Node.js 16+ (for frontend)
 - Git
 
@@ -152,7 +152,7 @@ The application follows a **Layered Architecture** pattern with clear separation
 
 2. **Configure Database**
    
-   Create a PostgreSQL database:
+   Create a MySQL database:
    ```sql
    CREATE DATABASE invoice_tracker;
    ```
@@ -185,7 +185,7 @@ The application follows a **Layered Architecture** pattern with clear separation
    ```
 
 6. **Access the application**
-   - Backend API: `http://localhost:8080`
+   - Backend API: `http://localhost:8089`
    - Frontend: `http://localhost:3000` (if running separately)
 
 ### Default Super User
@@ -266,7 +266,7 @@ newValues (JSON)
 
 ```properties
 # Server Configuration
-server.port=8080
+server.port=8089
 
 # Database
 spring.datasource.url=jdbc:postgresql://localhost:5432/invoice_tracker
@@ -306,7 +306,7 @@ export UPLOAD_DIR=/path/to/uploads
 
 ### Base URL
 ```
-http://localhost:8080
+http://localhost:8089
 ```
 
 ### Authentication Endpoints
@@ -352,7 +352,7 @@ http://localhost:8080
 
 **Login:**
 ```bash
-curl -X POST http://localhost:8080/auth/login \
+curl -X POST http://localhost:8089/auth/login \
   -H "Content-Type: application/json" \
   -d '{
     "username": "superuser",
@@ -375,7 +375,7 @@ curl -X POST http://localhost:8080/auth/login \
 
 **Create Invoice:**
 ```bash
-curl -X POST http://localhost:8080/invoices/upload \
+curl -X POST http://localhost:8089/invoices \
   -H "Authorization: Bearer YOUR_JWT_TOKEN" \
   -F "file=@invoice.pdf" \
   -F "invoiceDate=2024-10-31" \
@@ -509,15 +509,7 @@ public class Invoice {
 5. Client sends token in `Authorization` header for subsequent requests
 6. Server validates token and extracts user info
 
-### JWT Token Structure
 
-```json
-{
-  "sub": "username",
-  "roles": ["ROLE_USER", "ROLE_SUPERUSER"],
-  "iat": 1698765432,
-  "exp": 1698851832
-}
 ```
 
 ### Security Features
@@ -527,8 +519,7 @@ public class Invoice {
 ✅ **Rate Limiting**: Max 5 login attempts, 5-minute lockout
 ✅ **File Validation**: Type, size, and extension checking
 ✅ **CORS Configuration**: Configured for frontend origin
-✅ **SQL Injection Protection**: JPA parameterized queries
-✅ **XSS Protection**: Input validation and sanitization
+
 
 ### Rate Limiting
 
@@ -609,175 +600,3 @@ invoice-tracker/
 └── README.md
 ```
 
----
-
-## 🧪 Testing
-
-### Run Tests
-
-```bash
-# Run all tests
-mvn test
-
-# Run specific test class
-mvn test -Dtest=InvoiceServiceTest
-
-# Run with coverage
-mvn clean test jacoco:report
-```
-
-### Test Structure
-
-```
-src/test/java/
-├── controller/          # Controller tests
-├── service/             # Service layer tests
-├── repository/          # Repository tests
-└── integration/         # Integration tests
-```
-
----
-
-## 🔄 Git Workflow
-
-This project follows a structured Git branching strategy:
-
-### Branch Structure
-
-- `main` - Production-ready code
-- `dev` - Development branch
-- `feature/*` - Feature branches (e.g., `feature/invoice-upload`)
-- `bugfix/*` - Bug fix branches
-- `hotfix/*` - Emergency fixes
-
-### Workflow
-
-1. Create feature branch from `dev`:
-   ```bash
-   git checkout dev
-   git pull origin dev
-   git checkout -b feature/your-feature-name
-   ```
-
-2. Make changes and commit:
-   ```bash
-   git add .
-   git commit -m "feat: add invoice upload functionality"
-   ```
-
-3. Push to remote:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-4. Create Pull Request to `dev`
-5. After code review and approval, merge to `dev`
-6. When ready for release, create PR from `dev` to `main`
-
-### Commit Message Convention
-
-```
-feat: Add new feature
-fix: Fix bug
-docs: Update documentation
-style: Code formatting
-refactor: Code restructuring
-test: Add tests
-chore: Maintenance tasks
-```
-
----
-
-## 🚀 Deployment
-
-### Local Deployment
-
-1. Build the JAR:
-   ```bash
-   mvn clean package -DskipTests
-   ```
-
-2. Run the JAR:
-   ```bash
-   java -jar target/invoice-tracker-0.0.1-SNAPSHOT.jar
-   ```
-
-### Docker Deployment
-
-```dockerfile
-FROM openjdk:17-alpine
-COPY target/invoice-tracker-0.0.1-SNAPSHOT.jar app.jar
-EXPOSE 8080
-ENTRYPOINT ["java","-jar","/app.jar"]
-```
-
-Build and run:
-```bash
-docker build -t invoice-tracker .
-docker run -p 8080:8080 invoice-tracker
-```
-
----
-
-## 🐛 Troubleshooting
-
-### Common Issues
-
-**Issue: Database connection failed**
-```
-Solution: Check PostgreSQL is running and credentials are correct in application.properties
-```
-
-**Issue: File upload fails**
-```
-Solution: Ensure upload directory exists and has write permissions
-```
-
-**Issue: JWT token invalid**
-```
-Solution: Token may be expired (24h), login again to get new token
-```
-
-**Issue: Port 8080 already in use**
-```
-Solution: Change port in application.properties: server.port=8081
-```
-
----
-
-## 📞 Support & Contact
-
-For questions, issues, or contributions:
-
-- **Email**: your.email@example.com
-- **GitHub Issues**: [Create an issue](https://github.com/yourusername/invoice-tracker/issues)
-- **Documentation**: [Wiki](https://github.com/yourusername/invoice-tracker/wiki)
-
----
-
-## 📄 License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
----
-
-## 🙏 Acknowledgments
-
-- Spring Boot Team for the excellent framework
-- PostgreSQL Community
-- All contributors and testers
-
----
-
-## 📊 Project Statistics
-
-- **Total Lines of Code**: ~8,000+
-- **REST API Endpoints**: 34
-- **Database Tables**: 6
-- **Design Patterns**: 5
-- **Security Features**: 4 layers
-- **Supported File Types**: 4 (PDF, JPEG, PNG, GIF)
-
----
-
-**Built with ❤️ using Spring Boot**
