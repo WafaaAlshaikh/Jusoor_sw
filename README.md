@@ -116,10 +116,6 @@ The application follows a **Layered Architecture** pattern with clear separation
 - **Lombok** - Boilerplate reduction
 - **Maven** - Build tool
 
-### Frontend
-- **React.js** - UI framework
-- **Axios** - HTTP client
-- **React Router** - Navigation
 
 ### Security
 - JWT authentication with HS512 algorithm
