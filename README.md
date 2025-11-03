@@ -133,7 +133,6 @@ The application follows a **Layered Architecture** pattern with clear separation
 - Java 17 or higher
 - Maven 3.8+
 - MySQL
-- Node.js 16+ (for frontend)
 - Git
 
 ### Installation Steps
